@@ -13,7 +13,7 @@ spec:
     repoURL: https://github.com/rinormaloku/istio-helm-installation
     targetRevision: HEAD
     helm: 
-      releaseName: control-plane
+      releaseName: gateways
       valueFiles: 
         - ../../../../../cluster2-gateways.yaml
   syncPolicy:
