@@ -1,0 +1,44 @@
+gateways:
+  istio-ingressgateway:
+    name: istio-ingressgateway
+    labels:
+      app: istio-ingressgateway
+      istio: ingressgateway
+      topology.istio.io/network: network1
+    ports:
+    - name: http2
+      port: 80
+      targetPort: 8080
+    - name: https
+      port: 443
+      targetPort: 8443
+    - name: tcp-status-port
+      port: 15021
+      targetPort: 15021
+    - name: tls
+      port: 15443
+      targetPort: 15443
+    - name: tcp-istiod
+      port: 15012
+      targetPort: 15012
+    - name: tcp-webhook
+      port: 15017
+      targetPort: 15017
+
+    type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be
+  
+    env:
+      ISTIO_META_ROUTER_MODE: "sni-dnat"
+      ISTIO_META_REQUESTED_NETWORK_VIEW: "network1"
+
+    injectionTemplate: gateway
+
+global:
+  meshID: "mesh1"
+  multiCluster:
+    enabled: true
+    clusterName: "cluster1"
+  network: "network1"
+
+meshConfig:
+  trustDomain: "cluster.local"
