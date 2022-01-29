@@ -1,7 +1,7 @@
 kind create cluster --name istio-argo 
 
 kubectl create namespace argocd
-kubectl apply -n argocdn -f argocd-cm.yaml
+kubectl apply -n argocd -f argocd-cm.yaml
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -l 'app.kubernetes.io/name != argocd-cm' 
 kubectl -n argocd wait po --for condition=Ready --timeout -1s --all   
 
