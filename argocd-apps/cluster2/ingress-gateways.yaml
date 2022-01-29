@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-gateways
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-ingress
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: istio-1.11.4/manifests/charts/gateways/istio-ingress
+    repoURL: https://github.com/rinormaloku/istio-helm-installation
+    targetRevision: HEAD
+    helm: 
+      releaseName: control-plane
+      valueFiles: 
+        - ../../../../../cluster2-gateways.yaml
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
+
+
